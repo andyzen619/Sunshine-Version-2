@@ -72,7 +72,7 @@ public class ForcastFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.action_Refresh) {
-            new FetchWeatherTask().execute("94043");
+            new FetchWeatherTask().execute("Toronto,ca");
             return true;
         }
         return super.onOptionsItemSelected(item);
