@@ -78,12 +78,12 @@ public class ForcastFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private class FetchWeatherTask extends AsyncTask<String, Void, Void> {
+    private class FetchWeatherTask extends AsyncTask<String, Void, String> {
 
         private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
 
         @Override
-        protected Void doInBackground(String... params) {
+        protected String doInBackground(String... params) {
 
             if(params.length == 0) {
                 return null;
@@ -167,7 +167,9 @@ public class ForcastFragment extends Fragment {
                     }
                 }
             }
-            return null;
+
+
+            return forecastJsonStr;
         }
     }
 }
