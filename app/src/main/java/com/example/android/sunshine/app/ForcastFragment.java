@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import org.json.JSONException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -78,12 +80,12 @@ public class ForcastFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private class FetchWeatherTask extends AsyncTask<String, Void, String> {
+    private class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
 
         private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
 
         @Override
-        protected String doInBackground(String... params) {
+        protected String[] doInBackground(String... params) {
 
             if(params.length == 0) {
                 return null;
@@ -99,6 +101,9 @@ public class ForcastFragment extends Fragment {
             String format = "json";
             String units = "metric";
             int days = 7;
+
+            JsonWeatherExtractor jsonWeatherExtractor = new JsonWeatherExtractor();
+            String[] extractedWeatherInfo = new String[7];
 
             try {
                 String baseUrl = "http://api.openweathermap.org/data/2.5/forecast/daily?";
@@ -167,9 +172,12 @@ public class ForcastFragment extends Fragment {
                     }
                 }
             }
-
-
-            return forecastJsonStr;
+            try {
+                extractedWeatherInfo = jsonWeatherExtractor.getWeatherDataFromJson(forecastJsonStr, 7);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return extractedWeatherInfo;
         }
     }
 }
