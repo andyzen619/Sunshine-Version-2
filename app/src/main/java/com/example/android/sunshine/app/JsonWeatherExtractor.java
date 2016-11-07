@@ -8,6 +8,8 @@ import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 /**
  * Created by Andy DESK on 11/2/2016.
@@ -64,7 +66,29 @@ public class JsonWeatherExtractor {
             Double min = temp.getDouble(minTemp);
             JSONObject weather = day.getJSONObject(weatherAtt);
             String weatherDescription = weather.getString(description);
+
+            String dayofTheWeek = getDayOfTheWeek(i);
+            String result = getDayOfTheWeek(i) + "--" + weatherDescription + "-- " + max + "/" + min;
         }
         return null;
+    }
+
+    public String getDayOfTheWeek(int day) {
+        String result;
+        GregorianCalendar calendar = new GregorianCalendar();
+        int dayOfMonth;
+        String dayOfWeek;
+        calendar.add(Calendar.DAY_OF_MONTH, day);
+        dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        dayOfWeek = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.CANADA);
+
+        result = dayOfWeek + " " + dayOfMonth;
+        System.out.println(result);
+        return null;
+    }
+
+    public static void main(String [] args) {
+        JsonWeatherExtractor jsonWeatherExtractor = new JsonWeatherExtractor();
+        jsonWeatherExtractor.getDayOfTheWeek(1);
     }
 }
