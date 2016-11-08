@@ -25,6 +25,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 import java.util.zip.Inflater;
 
 public class ForcastFragment extends Fragment {
@@ -74,7 +75,16 @@ public class ForcastFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.action_Refresh) {
-            new FetchWeatherTask().execute("Toronto,ca");
+            FetchWeatherTask task = new FetchWeatherTask();
+            task.execute("Toronto,ca");
+            try {
+                String[] weatherInfo = task.get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -178,6 +188,12 @@ public class ForcastFragment extends Fragment {
                 e.printStackTrace();
             }
             return extractedWeatherInfo;
+        }
+
+        @Override
+        protected void onPostExecute(String[] strings) {
+            super.onPostExecute(strings);
+
         }
     }
 }

@@ -49,7 +49,7 @@ public class JsonWeatherExtractor {
         String temperature = "temp";
         String maxTemp = "max";
         String minTemp = "min";
-        String description = "main";
+        String description = "description";
         String weatherAtt = "weather";
         String[] resultStr = new String[7];
 
@@ -65,11 +65,12 @@ public class JsonWeatherExtractor {
             JSONObject temp = day.getJSONObject(temperature);
             Double max = temp.getDouble(maxTemp);
             Double min = temp.getDouble(minTemp);
-            JSONObject weather = day.getJSONObject(weatherAtt);
+            JSONArray weatherArray = day.getJSONArray(weatherAtt);
+            JSONObject weather  = (JSONObject) weatherArray.get(0);
             String weatherDescription = weather.getString(description);
 
             String dayofTheWeek = getDayOfTheWeek(i);
-            String result = getDayOfTheWeek(i) + "--" + weatherDescription + "-- " + max + "/" + min;
+            String result = dayofTheWeek + "--" + weatherDescription + "-- " + max + "/" + min;
 
             resultStr[i]= result;
 
@@ -87,8 +88,7 @@ public class JsonWeatherExtractor {
         dayOfWeek = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.CANADA);
 
         result = dayOfWeek + " " + dayOfMonth;
-        System.out.println(result);
-        return null;
+        return result;
     }
 
 //    public static void main(String [] args) throws JSONException {
