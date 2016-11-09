@@ -1,8 +1,10 @@
 package com.example.android.sunshine.app;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.os.AsyncTaskCompat;
@@ -29,6 +31,10 @@ import java.util.concurrent.ExecutionException;
 import java.util.zip.Inflater;
 
 public class ForcastFragment extends Fragment {
+
+    public ArrayAdapter forcastAdapter;
+    private ListView listView;
+
     public ForcastFragment() {
     }
 
@@ -50,13 +56,13 @@ public class ForcastFragment extends Fragment {
         fakeData.add("Friday-Showers");
         fakeData.add("Saturday-Windy");
 
-        ArrayAdapter forcastAdapter = new ArrayAdapter(
+        forcastAdapter = new ArrayAdapter(
                 getActivity(),
                 R.layout.list_item_forcast,
                 R.id.list_item_forcast_textview,
                 fakeData);
 
-        ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
+        listView = (ListView) rootView.findViewById(R.id.listview_forecast);
         listView.setAdapter(forcastAdapter);
 
         return rootView;
@@ -76,16 +82,8 @@ public class ForcastFragment extends Fragment {
         int id = item.getItemId();
         if(id == R.id.action_Refresh) {
             FetchWeatherTask task = new FetchWeatherTask();
+            String[] weatherInfo = new String[7];
             task.execute("Toronto,ca");
-            try {
-                String[] weatherInfo = task.get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
-
-            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -188,12 +186,14 @@ public class ForcastFragment extends Fragment {
                 e.printStackTrace();
             }
             return extractedWeatherInfo;
-        }
+         }
 
+        @TargetApi(Build.VERSION_CODES.HONEYCOMB)
         @Override
         protected void onPostExecute(String[] strings) {
             super.onPostExecute(strings);
-
+            forcastAdapter.clear();
+            forcastAdapter.addAll(strings);
         }
     }
 }
