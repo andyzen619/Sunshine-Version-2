@@ -25,7 +25,6 @@ public class JsonWeatherExtractor {
         return format.format(date);
     }
 
-    //TODO:2
     /**
      * Prepare the weather high/lows for presentation.
      */
@@ -34,7 +33,6 @@ public class JsonWeatherExtractor {
         return result;
     }
 
-    //TODO:3
     /**
      * Take the String representing the complete forecast in JSON Format and
      * pull out the data we need to construct the Strings needed for the wireframes.

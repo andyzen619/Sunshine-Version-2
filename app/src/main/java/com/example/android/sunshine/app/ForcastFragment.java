@@ -34,6 +34,7 @@ public class ForcastFragment extends Fragment {
 
     public ArrayAdapter forcastAdapter;
     private ListView listView;
+    public String[] weatherInfo = new String[7];
 
     public ForcastFragment() {
     }
@@ -48,19 +49,22 @@ public class ForcastFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        ArrayList<String> fakeData = new <String>ArrayList();
-        fakeData.add("Today-Sunny-88/16");
-        fakeData.add("Tomorrow-Rain-22/32");
-        fakeData.add("Wednesday-Cloudy");
-        fakeData.add("Thursday-Showers ");
-        fakeData.add("Friday-Showers");
-        fakeData.add("Saturday-Windy");
+
+        FetchWeatherTask task = new FetchWeatherTask();
+        task.execute("Toronto,ca");
+        try {
+            weatherInfo = task.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
 
         forcastAdapter = new ArrayAdapter(
                 getActivity(),
                 R.layout.list_item_forcast,
                 R.id.list_item_forcast_textview,
-                fakeData);
+                weatherInfo);
 
         listView = (ListView) rootView.findViewById(R.id.listview_forecast);
         listView.setAdapter(forcastAdapter);
@@ -192,8 +196,10 @@ public class ForcastFragment extends Fragment {
         @Override
         protected void onPostExecute(String[] strings) {
             super.onPostExecute(strings);
-            forcastAdapter.clear();
-            forcastAdapter.addAll(strings);
+            if(weatherInfo != null) { //TODO: CUASING CRASH AT INITIALIZATION
+                forcastAdapter.clear();
+                forcastAdapter.addAll(strings);
+            }
         }
     }
 }
