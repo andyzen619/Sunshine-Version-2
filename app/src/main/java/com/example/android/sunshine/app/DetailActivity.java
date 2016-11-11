@@ -24,6 +24,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class DetailActivity extends ActionBarActivity {
 
@@ -36,6 +37,11 @@ public class DetailActivity extends ActionBarActivity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+
+        String selectedWeatherInfo = getIntent().getStringExtra("forcast");
+        TextView weatherInfo = (TextView) findViewById(R.id.detail_activity_weather_detail);
+        weatherInfo.setText(selectedWeatherInfo);
+
     }
 
 

@@ -75,7 +75,9 @@ public class ForcastFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String selectedWeatherInfo = (String) forcastAdapter.getItem(i);
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
+                intent.putExtra("forcast", selectedWeatherInfo);
                 startActivity(intent);
             }
         });
