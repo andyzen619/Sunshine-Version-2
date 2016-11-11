@@ -68,7 +68,7 @@ public class JsonWeatherExtractor {
             String weatherDescription = weather.getString(description);
 
             String dayofTheWeek = getDayOfTheWeek(i);
-            String result = dayofTheWeek + " " + weatherDescription + "                 " + formatHighLows(max, min);
+            String result = dayofTheWeek + "                 " + weatherDescription + "                 " + formatHighLows(max, min);
 
             resultStr[i]= result;
 

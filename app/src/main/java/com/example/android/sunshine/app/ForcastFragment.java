@@ -2,6 +2,7 @@ package com.example.android.sunshine.app;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -15,8 +16,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 
@@ -27,6 +30,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 import java.util.zip.Inflater;
 
@@ -64,10 +68,17 @@ public class ForcastFragment extends Fragment {
                 getActivity(),
                 R.layout.list_item_forcast,
                 R.id.list_item_forcast_textview,
-                weatherInfo);
+                new ArrayList<String>(Arrays.asList(weatherInfo)));
 
         listView = (ListView) rootView.findViewById(R.id.listview_forecast);
         listView.setAdapter(forcastAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return rootView;
     }
@@ -81,6 +92,7 @@ public class ForcastFragment extends Fragment {
 
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -88,6 +100,16 @@ public class ForcastFragment extends Fragment {
             FetchWeatherTask task = new FetchWeatherTask();
             String[] weatherInfo = new String[7];
             task.execute("Toronto,ca");
+
+            try {
+                weatherInfo = task.get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            forcastAdapter.clear();
+            forcastAdapter.addAll(weatherInfo);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -191,15 +213,5 @@ public class ForcastFragment extends Fragment {
             }
             return extractedWeatherInfo;
          }
-
-        @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-        @Override
-        protected void onPostExecute(String[] strings) {
-            super.onPostExecute(strings);
-            if(weatherInfo != null) { //TODO: CUASING CRASH AT INITIALIZATION
-                forcastAdapter.clear();
-                forcastAdapter.addAll(strings);
-            }
-        }
     }
 }
