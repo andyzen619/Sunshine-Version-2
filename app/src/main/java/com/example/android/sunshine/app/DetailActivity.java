@@ -28,6 +28,8 @@ import android.widget.TextView;
 
 public class DetailActivity extends ActionBarActivity {
 
+    public static String selectedWeatherInfo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,10 +39,7 @@ public class DetailActivity extends ActionBarActivity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
-
-        String selectedWeatherInfo = getIntent().getStringExtra("forcast");
-        TextView weatherInfo = (TextView) findViewById(R.id.detail_activity_weather_detail);
-        weatherInfo.setText(selectedWeatherInfo);
+        selectedWeatherInfo = getIntent().getStringExtra("forcast");
 
     }
 
@@ -71,6 +70,7 @@ public class DetailActivity extends ActionBarActivity {
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends Fragment {
+        private TextView weatherInfoView;
 
         public PlaceholderFragment() {
         }
@@ -80,6 +80,9 @@ public class DetailActivity extends ActionBarActivity {
                                  Bundle savedInstanceState) {
 
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
+
+            weatherInfoView = (TextView) rootView.findViewById(R.id.detail_activity_weather_detail);
+            weatherInfoView.setText(selectedWeatherInfo);
             return rootView;
         }
     }
