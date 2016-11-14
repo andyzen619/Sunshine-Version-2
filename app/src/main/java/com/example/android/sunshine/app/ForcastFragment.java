@@ -38,7 +38,7 @@ public class ForcastFragment extends Fragment {
 
     public ArrayAdapter forcastAdapter;
     private ListView listView;
-    public String[] weatherInfo = new String[7];
+    public WeatherInfo[] weatherObjects = new WeatherInfo[7];
 
     public ForcastFragment() {
     }
@@ -57,7 +57,7 @@ public class ForcastFragment extends Fragment {
         FetchWeatherTask task = new FetchWeatherTask();
         task.execute("Toronto,ca");
         try {
-            weatherInfo = task.get();
+            weatherObjects = task.get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -68,7 +68,7 @@ public class ForcastFragment extends Fragment {
                 getActivity(),
                 R.layout.list_item_forcast,
                 R.id.list_item_forcast_textview,
-                new ArrayList<String>(Arrays.asList(weatherInfo)));
+                new ArrayList(Arrays.asList(weatherObjects)));
 
         listView = (ListView) rootView.findViewById(R.id.listview_forecast);
         listView.setAdapter(forcastAdapter);
@@ -100,7 +100,7 @@ public class ForcastFragment extends Fragment {
         int id = item.getItemId();
         if(id == R.id.action_Refresh) {
             FetchWeatherTask task = new FetchWeatherTask();
-            String[] weatherInfo = new String[7];
+            WeatherInfo[] weatherInfo = new WeatherInfo[7];
             task.execute("Toronto,ca");
 
             try {
@@ -116,12 +116,12 @@ public class ForcastFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
+    private class FetchWeatherTask extends AsyncTask<String, Void, WeatherInfo[]> {
 
         private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
 
         @Override
-        protected String[] doInBackground(String... params) {
+        protected WeatherInfo[] doInBackground(String... params) {
 
             if(params.length == 0) {
                 return null;
@@ -139,7 +139,7 @@ public class ForcastFragment extends Fragment {
             int days = 7;
 
             JsonWeatherExtractor jsonWeatherExtractor = new JsonWeatherExtractor();
-            String[] extractedWeatherInfo = new String[7];
+            WeatherInfo[] extractedWeatherInfo = new WeatherInfo[7];
 
             try {
                 String baseUrl = "http://api.openweathermap.org/data/2.5/forecast/daily?";

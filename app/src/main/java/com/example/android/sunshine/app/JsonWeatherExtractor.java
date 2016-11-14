@@ -26,21 +26,13 @@ public class JsonWeatherExtractor {
     }
 
     /**
-     * Prepare the weather high/lows for presentation.
-     */
-    public String formatHighLows(double high, double low) {
-        String result = "High: " + (int) high + "          " + "Low: " + (int)low;
-        return result;
-    }
-
-    /**
      * Take the String representing the complete forecast in JSON Format and
      * pull out the data we need to construct the Strings needed for the wireframes.
      *
      * Fortunately parsing is easy:  constructor takes the JSON string and converts it
      * into an Object hierarchy for us.
      */
-    public String[] getWeatherDataFromJson(String forecastJsonStr, int numDays)
+    public WeatherInfo[] getWeatherDataFromJson(String forecastJsonStr, int numDays)
             throws JSONException {
 
         String dayList = "list";
@@ -49,7 +41,7 @@ public class JsonWeatherExtractor {
         String minTemp = "min";
         String description = "description";
         String weatherAtt = "weather";
-        String[] resultStr = new String[7];
+        WeatherInfo[] result = new WeatherInfo[7];
 
         JSONObject baseJsonString = new JSONObject(forecastJsonStr);
         JSONArray listOfDays = baseJsonString.getJSONArray(dayList);
@@ -68,12 +60,12 @@ public class JsonWeatherExtractor {
             String weatherDescription = weather.getString(description);
 
             String dayofTheWeek = getDayOfTheWeek(i);
-            String result = dayofTheWeek + "                 " + weatherDescription + "                 " + formatHighLows(max, min);
+            WeatherInfo weatherInfoObject = new WeatherInfo(dayofTheWeek, weatherDescription, max, min);
 
-            resultStr[i]= result;
+            result[i]= weatherInfoObject;
 
         }
-        return resultStr;
+        return result;
     }
 
     public String getDayOfTheWeek(int day) {
