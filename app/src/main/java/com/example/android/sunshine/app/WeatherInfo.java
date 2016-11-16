@@ -1,10 +1,12 @@
 package com.example.android.sunshine.app;
 
+import java.io.Serializable;
+
 /**
  * Created by andy on 13/11/16.
  */
 
-public class WeatherInfo {
+public class WeatherInfo implements Serializable {
 
     private String date;
     private String description;
@@ -34,7 +36,7 @@ public class WeatherInfo {
         return low;
     }
 
-    public String mainFormat() {
+    public String getMainFormat() {
         return getDate() +
                 "                 " +
                 getDescription() +
@@ -46,11 +48,11 @@ public class WeatherInfo {
                 (int)low;
     }
 
-    public String detailFormat() {
+    public String getDetailFormat() {
         return getDate() +
-                "-" +
+                " -" +
                 getDescription() +
-                "-" +
+                "- " +
                 (int) getHi()+
                 "/" +
                 (int) getLow();

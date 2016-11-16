@@ -1,4 +1,4 @@
-package com.example.android.sunshine.app;
+package com.example.android.sunshine.app.Fragments;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -21,12 +21,20 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.android.sunshine.app.BuildConfig;
+import com.example.android.sunshine.app.DetailActivity;
+import com.example.android.sunshine.app.JsonWeatherExtractor;
+import com.example.android.sunshine.app.R;
+import com.example.android.sunshine.app.WeatherInfo;
+import com.example.android.sunshine.app.WeatherInfoArrayAdapter;
+
 import org.json.JSONException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -64,7 +72,7 @@ public class ForcastFragment extends Fragment {
             e.printStackTrace();
         }
 
-        forcastAdapter = new ArrayAdapter(
+        forcastAdapter = new WeatherInfoArrayAdapter(
                 getActivity(),
                 R.layout.list_item_forcast,
                 R.id.list_item_forcast_textview,
@@ -75,7 +83,7 @@ public class ForcastFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String selectedWeatherInfo = (String) forcastAdapter.getItem(i);
+                String selectedWeatherInfo = ((WeatherInfo) forcastAdapter.getItem(i)).getDetailFormat();
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtra("forcast", selectedWeatherInfo);
                 startActivity(intent);

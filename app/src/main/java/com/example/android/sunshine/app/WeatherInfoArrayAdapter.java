@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -24,8 +25,6 @@ public class WeatherInfoArrayAdapter extends ArrayAdapter {
         super(context, resource, textViewResourceId, objects);
     }
 
-
-
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -34,7 +33,7 @@ public class WeatherInfoArrayAdapter extends ArrayAdapter {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_forcast, parent, false);
         }
         TextView mainFragmentWeatherText = (TextView) convertView.findViewById(R.id.list_item_forcast_textview);
-        mainFragmentWeatherText.setText(selectedWeatherInfo.mainFormat());
+        mainFragmentWeatherText.setText(selectedWeatherInfo.getMainFormat());
         return convertView;
     }
 }
