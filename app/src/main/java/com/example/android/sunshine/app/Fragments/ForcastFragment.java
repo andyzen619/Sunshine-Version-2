@@ -75,10 +75,10 @@ public class ForcastFragment extends Fragment {
         forcastAdapter = new WeatherInfoArrayAdapter(
                 getActivity(),
                 R.layout.list_item_forcast,
-                R.id.list_item_forcast_textview,
+                R.id.main_activity_forcast_list_item,
                 new ArrayList(Arrays.asList(weatherObjects)));
 
-        listView = (ListView) rootView.findViewById(R.id.listview_forecast);
+        listView = (ListView) rootView.findViewById(R.id.main_activity_forcast_listvew);
         listView.setAdapter(forcastAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

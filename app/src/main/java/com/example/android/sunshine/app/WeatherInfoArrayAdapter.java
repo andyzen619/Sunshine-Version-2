@@ -32,7 +32,7 @@ public class WeatherInfoArrayAdapter extends ArrayAdapter {
         if(convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_forcast, parent, false);
         }
-        TextView mainFragmentWeatherText = (TextView) convertView.findViewById(R.id.list_item_forcast_textview);
+        TextView mainFragmentWeatherText = (TextView) convertView.findViewById(R.id.main_activity_forcast_list_item);
         mainFragmentWeatherText.setText(selectedWeatherInfo.getMainFormat());
         return convertView;
     }

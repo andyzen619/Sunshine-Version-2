@@ -4,7 +4,7 @@
     tools:context=".MainActivity$PlaceholderFragment">
 
     <ListView
-        android:id="@+id/listview_forecast"
+        android:id="@+id/main_activity_forcast_listvew"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@android:color/holo_blue_light"></ListView>

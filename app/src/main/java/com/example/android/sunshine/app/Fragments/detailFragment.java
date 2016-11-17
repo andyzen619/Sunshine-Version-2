@@ -28,7 +28,7 @@ public class DetailFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 
-        weatherInfoView = (TextView) rootView.findViewById(R.id.detail_activity_weather_detail);
+        weatherInfoView = (TextView) rootView.findViewById(R.id.detail_activity_weather_textview);
         weatherInfoView.setText(selectedWeatherInfo);
         return rootView;
     }

@@ -7,7 +7,7 @@
     android:textSize="15dp"
     android:paddingTop="25dp"
     android:paddingBottom="25dp"
-    android:id="@+id/list_item_forcast_textview"
+    android:id="@+id/main_activity_forcast_list_item"
     android:gravity="center_vertical">
 
 </TextView>
