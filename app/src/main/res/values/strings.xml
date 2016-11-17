@@ -8,7 +8,8 @@
     <!-- Menu button names -->
     <string name="action_Refresh">Refresh</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Settings labels -->
+    <string name="action_set_location">Location</string>
+    <string name=""
 
 </resources>
