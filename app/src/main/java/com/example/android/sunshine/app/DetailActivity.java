@@ -26,6 +26,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.android.sunshine.app.Fragments.DetailFragment;
+
 public class DetailActivity extends ActionBarActivity {
 
     public static String selectedWeatherInfo;
@@ -36,7 +38,7 @@ public class DetailActivity extends ActionBarActivity {
         setContentView(R.layout.activity_detail);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+                    .add(R.id.container, new DetailFragment())
                     .commit();
         }
         selectedWeatherInfo = getIntent().getStringExtra("forcast");
@@ -64,26 +66,5 @@ public class DetailActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        private TextView weatherInfoView;
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-
-            View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
-
-            weatherInfoView = (TextView) rootView.findViewById(R.id.detail_activity_weather_detail);
-            weatherInfoView.setText(selectedWeatherInfo);
-            return rootView;
-        }
     }
 }

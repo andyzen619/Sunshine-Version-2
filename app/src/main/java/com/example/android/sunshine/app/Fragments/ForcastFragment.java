@@ -1,4 +1,4 @@
-package com.example.android.sunshine.app;
+package com.example.android.sunshine.app.Fragments;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -21,12 +21,20 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.android.sunshine.app.BuildConfig;
+import com.example.android.sunshine.app.DetailActivity;
+import com.example.android.sunshine.app.JsonWeatherExtractor;
+import com.example.android.sunshine.app.R;
+import com.example.android.sunshine.app.WeatherInfo;
+import com.example.android.sunshine.app.WeatherInfoArrayAdapter;
+
 import org.json.JSONException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -38,7 +46,7 @@ public class ForcastFragment extends Fragment {
 
     public ArrayAdapter forcastAdapter;
     private ListView listView;
-    public String[] weatherInfo = new String[7];
+    public WeatherInfo[] weatherObjects = new WeatherInfo[7];
 
     public ForcastFragment() {
     }
@@ -57,25 +65,25 @@ public class ForcastFragment extends Fragment {
         FetchWeatherTask task = new FetchWeatherTask();
         task.execute("Toronto,ca");
         try {
-            weatherInfo = task.get();
+            weatherObjects = task.get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
 
-        forcastAdapter = new ArrayAdapter(
+        forcastAdapter = new WeatherInfoArrayAdapter(
                 getActivity(),
                 R.layout.list_item_forcast,
-                R.id.list_item_forcast_textview,
-                new ArrayList<String>(Arrays.asList(weatherInfo)));
+                R.id.main_activity_forcast_list_item,
+                new ArrayList(Arrays.asList(weatherObjects)));
 
-        listView = (ListView) rootView.findViewById(R.id.listview_forecast);
+        listView = (ListView) rootView.findViewById(R.id.main_activity_forcast_listvew);
         listView.setAdapter(forcastAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String selectedWeatherInfo = (String) forcastAdapter.getItem(i);
+                String selectedWeatherInfo = ((WeatherInfo) forcastAdapter.getItem(i)).getDetailFormat();
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtra("forcast", selectedWeatherInfo);
                 startActivity(intent);
@@ -100,7 +108,7 @@ public class ForcastFragment extends Fragment {
         int id = item.getItemId();
         if(id == R.id.action_Refresh) {
             FetchWeatherTask task = new FetchWeatherTask();
-            String[] weatherInfo = new String[7];
+            WeatherInfo[] weatherInfo = new WeatherInfo[7];
             task.execute("Toronto,ca");
 
             try {
@@ -116,12 +124,12 @@ public class ForcastFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
+    private class FetchWeatherTask extends AsyncTask<String, Void, WeatherInfo[]> {
 
         private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
 
         @Override
-        protected String[] doInBackground(String... params) {
+        protected WeatherInfo[] doInBackground(String... params) {
 
             if(params.length == 0) {
                 return null;
@@ -139,7 +147,7 @@ public class ForcastFragment extends Fragment {
             int days = 7;
 
             JsonWeatherExtractor jsonWeatherExtractor = new JsonWeatherExtractor();
-            String[] extractedWeatherInfo = new String[7];
+            WeatherInfo[] extractedWeatherInfo = new WeatherInfo[7];
 
             try {
                 String baseUrl = "http://api.openweathermap.org/data/2.5/forecast/daily?";
