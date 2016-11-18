@@ -3,10 +3,12 @@ package com.example.android.sunshine.app.Fragments;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.os.AsyncTaskCompat;
 import android.util.Log;
@@ -47,6 +49,8 @@ public class ForcastFragment extends Fragment {
     public ArrayAdapter forcastAdapter;
     private ListView listView;
     public WeatherInfo[] weatherObjects = new WeatherInfo[7];
+    SharedPreferences sharedPref;
+    String userSetLocation;
 
     public ForcastFragment() {
     }
@@ -61,9 +65,11 @@ public class ForcastFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String userSetLocation = sharedPref.getString("LocationKey", "Toronto,ca");
 
         FetchWeatherTask task = new FetchWeatherTask();
-        task.execute("Toronto,ca");
+        task.execute(userSetLocation);
         try {
             weatherObjects = task.get();
         } catch (InterruptedException e) {
@@ -109,7 +115,7 @@ public class ForcastFragment extends Fragment {
         if(id == R.id.action_Refresh) {
             FetchWeatherTask task = new FetchWeatherTask();
             WeatherInfo[] weatherInfo = new WeatherInfo[7];
-            task.execute("Toronto,ca");
+            task.execute(userSetLocation);
 
             try {
                 weatherInfo = task.get();

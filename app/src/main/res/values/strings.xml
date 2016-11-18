@@ -10,6 +10,9 @@
 
     <!-- Settings labels -->
     <string name="action_set_location">Location</string>
-    <string name=""
+    <string name="units_of_mesurement">Celcius</string>
+
+    <!-- Settings keys -->
+    <string name="location_key">LocationKey</string>
 
 </resources>
