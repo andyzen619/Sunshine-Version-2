@@ -4,4 +4,9 @@
         android:title="@string/action_set_location"
         android:key="@string/location_key"
         />
+    <ListPreference
+        android:title="@string/action_set_units_of_mesurement"
+        android:key="@string/units_of_measurment_key"
+        android:entries="@array/units_array"
+        />
 </PreferenceScreen>

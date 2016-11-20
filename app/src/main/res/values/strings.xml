@@ -2,17 +2,23 @@
 <resources>
 
     <string name="app_name">Sunshine</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
-    <!-- Menu button names -->
+    <!-- Menu button labels -->
     <string name="action_Refresh">Refresh</string>
 
     <!-- Settings labels -->
     <string name="action_set_location">Location</string>
-    <string name="units_of_mesurement">Celcius</string>
+    <string name="action_set_units_of_mesurement">Pick Your Units</string>
 
     <!-- Settings keys -->
     <string name="location_key">LocationKey</string>
+    <string name="units_of_measurment_key"></string>
+
+    <!-- String arrays -->
+    <string-array name="units_array">
+        <item>Metric</item>
+        <item>Imperial</item>
+    </string-array>
 
 </resources>

@@ -99,7 +99,11 @@ public class ForcastFragment extends Fragment {
         return rootView;
     }
 
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        updateWeatherInfo();
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -108,26 +112,32 @@ public class ForcastFragment extends Fragment {
 
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.action_Refresh) {
-            FetchWeatherTask task = new FetchWeatherTask();
-            WeatherInfo[] weatherInfo = new WeatherInfo[7];
-            task.execute(userSetLocation);
-
-            try {
-                weatherInfo = task.get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
-            forcastAdapter.clear();
-            forcastAdapter.addAll(weatherInfo);
+            updateWeatherInfo();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public void updateWeatherInfo() {
+        FetchWeatherTask task = new FetchWeatherTask();
+        WeatherInfo[] weatherInfo = new WeatherInfo[7];
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        userSetLocation = sharedPref.getString("LocationKey", "Toronto,ca");
+        task.execute(userSetLocation);
+
+        try {
+            weatherInfo = task.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        forcastAdapter.clear();
+        forcastAdapter.addAll(weatherInfo);
     }
 
     private class FetchWeatherTask extends AsyncTask<String, Void, WeatherInfo[]> {
