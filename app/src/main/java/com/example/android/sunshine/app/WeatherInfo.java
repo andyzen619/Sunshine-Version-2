@@ -36,7 +36,7 @@ public class WeatherInfo implements Serializable {
     }
 
     public double getHi() {
-        String unitSelection = preferences.getString() //TODO: get temperature based selected units setting
+        String unitSelection = preferences.getString("UnitsKey", "Metric"); //TODO: get temperature based selected units setting
         if(unitSelection == )
         return hi;
     }

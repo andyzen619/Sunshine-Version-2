@@ -13,7 +13,7 @@
 
     <!-- Settings keys -->
     <string name="location_key">LocationKey</string>
-    <string name="units_of_measurment_key"></string>
+    <string name="units_of_measurment_key">UnitsKey</string>
 
     <!-- Settings label for units of measurment -->
     <string name="units_metric_label">Metric</string>
