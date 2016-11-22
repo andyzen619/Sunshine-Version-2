@@ -162,7 +162,7 @@ public class ForcastFragment extends Fragment {
             String units = "metric";
             int days = 7;
 
-            JsonWeatherExtractor jsonWeatherExtractor = new JsonWeatherExtractor();
+            JsonWeatherExtractor jsonWeatherExtractor = new JsonWeatherExtractor(getActivity());
             WeatherInfo[] extractedWeatherInfo = new WeatherInfo[7];
 
             try {

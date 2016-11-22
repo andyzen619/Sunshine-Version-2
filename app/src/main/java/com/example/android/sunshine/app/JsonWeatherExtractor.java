@@ -1,5 +1,7 @@
 package com.example.android.sunshine.app;
 
+import android.content.Context;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,6 +18,12 @@ import java.util.Locale;
  */
 
 public class JsonWeatherExtractor {
+
+    private Context context;
+
+    public JsonWeatherExtractor(Context context) {
+        this.context = context;
+    }
 
 
     public String getReadableDateString(long time){
@@ -60,7 +68,7 @@ public class JsonWeatherExtractor {
             String weatherDescription = weather.getString(description);
 
             String dayofTheWeek = getDayOfTheWeek(i);
-            WeatherInfo weatherInfoObject = new WeatherInfo(dayofTheWeek, weatherDescription, max, min);
+            WeatherInfo weatherInfoObject = new WeatherInfo(dayofTheWeek, weatherDescription, max, min, context);
 
             result[i]= weatherInfoObject;
 

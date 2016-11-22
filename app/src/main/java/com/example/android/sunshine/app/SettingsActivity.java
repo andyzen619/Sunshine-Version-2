@@ -29,7 +29,9 @@ public class SettingsActivity extends PreferenceActivity
         // updated when the preference changes.
         // TODO: Add preferences
         String locationKey = getString(R.string.location_key);
+        String unitsKey = getString(R.string.units_of_measurment_key);
         bindPreferenceSummaryToValue(findPreference(locationKey));
+        bindPreferenceSummaryToValue(findPreference(unitsKey));
     }
 
     /**

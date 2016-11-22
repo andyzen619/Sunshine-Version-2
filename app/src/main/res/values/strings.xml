@@ -15,10 +15,22 @@
     <string name="location_key">LocationKey</string>
     <string name="units_of_measurment_key"></string>
 
+    <!-- Settings label for units of measurment -->
+    <string name="units_metric_label">Metric</string>
+    <string name="units_imperial_label">Imperial</string>
+
+    <!-- Settings values for units of measurment -->
+    <string name="units_metric_value">metric</string>
+    <string name="units_imperial_value">imperial</string>
+
     <!-- String arrays -->
-    <string-array name="units_array">
-        <item>Metric</item>
-        <item>Imperial</item>
+    <string-array name="units_entries_array">
+        <item>@string/units_metric_label</item>
+        <item>@string/units_imperial_label</item>
+    </string-array>
+    <string-array name="units_values_array">
+        <item>@string/units_metric_value</item>
+        <item>@string/units_imperial_value</item>
     </string-array>
 
 </resources>

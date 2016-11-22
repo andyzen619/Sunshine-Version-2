@@ -1,5 +1,10 @@
 package com.example.android.sunshine.app;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
+
 import java.io.Serializable;
 
 /**
@@ -12,12 +17,14 @@ public class WeatherInfo implements Serializable {
     private String description;
     private double hi;
     private double low;
+    private SharedPreferences preferences;
 
-    public WeatherInfo(String date, String description, Double hi, Double low) {
+    public WeatherInfo(String date, String description, Double hi, Double low, Context context) {
         this.date = date;
         this.description = description;
         this.hi = hi;
         this.low = low;
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     public String getDate() {
@@ -29,6 +36,8 @@ public class WeatherInfo implements Serializable {
     }
 
     public double getHi() {
+        String unitSelection = preferences.getString() //TODO: get temperature based selected units setting
+        if(unitSelection == )
         return hi;
     }
 
