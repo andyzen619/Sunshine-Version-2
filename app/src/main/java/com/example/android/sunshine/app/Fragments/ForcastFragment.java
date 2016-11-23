@@ -46,6 +46,8 @@ import java.util.zip.Inflater;
 
 public class ForcastFragment extends Fragment {
 
+    String locationKey;
+
     public ArrayAdapter forcastAdapter;
     private ListView listView;
     public WeatherInfo[] weatherObjects = new WeatherInfo[7];
@@ -66,7 +68,8 @@ public class ForcastFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String userSetLocation = sharedPref.getString("LocationKey", "Toronto,ca");
+        String userSetLocation = sharedPref.getString(locationKey, "Toronto,ca");
+        locationKey = getResources().getString(R.string.location_key);
 
         FetchWeatherTask task = new FetchWeatherTask();
         task.execute(userSetLocation);
@@ -118,7 +121,14 @@ public class ForcastFragment extends Fragment {
         if(id == R.id.action_Refresh) {
             updateWeatherInfo();
         }
+        else if(id == R.id.action_location) {
+            viewLoctaion(locationKey);
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void viewLoctaion(String locationKey) {
+        //Uri locaitonUri = Uri.parse();
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
