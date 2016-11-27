@@ -43,6 +43,7 @@ public class JsonWeatherExtractor {
     public WeatherInfo[] getWeatherDataFromJson(String forecastJsonStr, int numDays)
             throws JSONException {
 
+        String cityDetails = "city";
         String dayList = "list";
         String temperature = "temp";
         String maxTemp = "max";
@@ -53,6 +54,12 @@ public class JsonWeatherExtractor {
 
         JSONObject baseJsonString = new JSONObject(forecastJsonStr);
         JSONArray listOfDays = baseJsonString.getJSONArray(dayList);
+
+        //obtain the coordianes of the location
+        JSONObject jsonCityDetails = baseJsonString.getJSONObject(cityDetails);
+        JSONObject coordinates = jsonCityDetails.getJSONObject("coord");
+        String latitude = coordinates.getString("lat");
+        String longitude = coordinates.getString("lon");
 
         Date date = new Date();
         Long currentTime = date.getTime();
@@ -69,6 +76,8 @@ public class JsonWeatherExtractor {
 
             String dayofTheWeek = getDayOfTheWeek(i);
             WeatherInfo weatherInfoObject = new WeatherInfo(dayofTheWeek, weatherDescription, max, min, context);
+            weatherInfoObject.setLat(latitude);
+            weatherInfoObject.setLon(longitude);
 
             result[i]= weatherInfoObject;
 

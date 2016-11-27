@@ -21,6 +21,8 @@ public class WeatherInfo implements Serializable {
     private double low;
     private SharedPreferences preferences;
     public static Context context;
+    private String lat;
+    private String lon;
 
     public WeatherInfo(String date, String description, Double hi, Double low, Context context) {
         this.date = date;
@@ -31,6 +33,8 @@ public class WeatherInfo implements Serializable {
         this.context = context;
         this.unitsKey = context.getResources().getString(R.string.units_of_measurment_key);
         this.metricValue = context.getResources().getString(R.string.units_metric_value);
+        this.lon = "N/A";
+        this.lat = "N/A";
     }
 
     public String getDate() {
@@ -39,6 +43,22 @@ public class WeatherInfo implements Serializable {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public String getLon() {
+        return lon;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public void setLon(String lon) {
+        this.lon = lon;
     }
 
     public double getHi() {
