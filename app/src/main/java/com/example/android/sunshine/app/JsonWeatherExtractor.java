@@ -1,6 +1,8 @@
 package com.example.android.sunshine.app;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,6 +22,7 @@ import java.util.Locale;
 public class JsonWeatherExtractor {
 
     private Context context;
+    private SharedPreferences sharedPref;
 
     public JsonWeatherExtractor(Context context) {
         this.context = context;
@@ -54,12 +57,15 @@ public class JsonWeatherExtractor {
 
         JSONObject baseJsonString = new JSONObject(forecastJsonStr);
         JSONArray listOfDays = baseJsonString.getJSONArray(dayList);
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
 
         //obtain the coordianes of the location
         JSONObject jsonCityDetails = baseJsonString.getJSONObject(cityDetails);
         JSONObject coordinates = jsonCityDetails.getJSONObject("coord");
-        String latitude = coordinates.getString("lat");
-        String longitude = coordinates.getString("lon");
+        String coordinatesString = coordinates.getString("lat")+ ", " + coordinates.getString("lon");
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(context.getResources().getString(R.string.coordinates_key), coordinatesString);
+        editor.commit();
 
         Date date = new Date();
         Long currentTime = date.getTime();
@@ -76,9 +82,6 @@ public class JsonWeatherExtractor {
 
             String dayofTheWeek = getDayOfTheWeek(i);
             WeatherInfo weatherInfoObject = new WeatherInfo(dayofTheWeek, weatherDescription, max, min, context);
-            weatherInfoObject.setLat(latitude);
-            weatherInfoObject.setLon(longitude);
-
             result[i]= weatherInfoObject;
 
         }

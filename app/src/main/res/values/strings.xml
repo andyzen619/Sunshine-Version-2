@@ -14,10 +14,12 @@
     <!-- Settings keys -->
     <string name="location_key">LocationKey</string>
     <string name="units_of_measurment_key">UnitsKey</string>
+    <string name="coordinates_key">CoordinatesKey</string>
 
     <!-- Settings label for units of measurment -->
     <string name="units_metric_label">Metric</string>
     <string name="units_imperial_label">Imperial</string>
+
 
     <!-- Settings values for units of measurment -->
     <string name="units_metric_value">metric</string>

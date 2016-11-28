@@ -128,7 +128,11 @@ public class ForcastFragment extends Fragment {
     }
 
     private void viewLoctaion(String locationKey) {
-        //Uri locaitonUri = Uri.parse();
+        String coordinateString = sharedPref.getString(getResources().getString(R.string.coordinates_key), "N/A");
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("geo:" + coordinateString));
+        Log.v("Coordinates", "geo:" + coordinateString);
+        startActivity(intent);
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
