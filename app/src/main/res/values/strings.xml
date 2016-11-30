@@ -6,6 +6,7 @@
 
     <!-- Menu button labels -->
     <string name="action_Refresh">Refresh</string>
+    <string name="action_share">Share</string>
 
     <!-- Settings labels -->
     <string name="action_set_location">Location</string>
