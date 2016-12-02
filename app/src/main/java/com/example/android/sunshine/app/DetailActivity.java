@@ -39,7 +39,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 public class DetailActivity extends ActionBarActivity {
 
     public static String selectedWeatherInfo;
-    private ShareActionProvider mShareActionProvider;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -68,8 +67,6 @@ public class DetailActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.detail, menu);
-        MenuItem item = menu.findItem(R.id.share_action_settings);
-        mShareActionProvider = (ShareActionProvider) item.getActionProvider();
 
         return true;
     }

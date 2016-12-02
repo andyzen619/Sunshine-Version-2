@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ShareActionProvider;
 import android.widget.Toast;
 
 import com.example.android.sunshine.app.BuildConfig;
@@ -53,6 +54,7 @@ public class ForcastFragment extends Fragment {
     public WeatherInfo[] weatherObjects = new WeatherInfo[7];
     SharedPreferences sharedPref;
     String userSetLocation;
+    private ShareActionProvider mShareActionProvider;
 
     public ForcastFragment() {
     }
@@ -108,11 +110,11 @@ public class ForcastFragment extends Fragment {
         updateWeatherInfo();
     }
 
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.forecast_fragment, menu);
-
     }
 
     @Override
