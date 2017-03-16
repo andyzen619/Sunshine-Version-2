@@ -15,6 +15,7 @@
  */
 package com.example.android.sunshine.app.data;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
@@ -112,22 +113,42 @@ public class TestDb extends AndroidTestCase {
     */
     public void testLocationTable() {
         // First step: Get reference to writable database
+        SQLiteDatabase db = new WeatherDbHelper(mContext).getWritableDatabase();
 
         // Create ContentValues of what you want to insert
         // (you can use the createNorthPoleLocationValues if you wish)
+        String testLocationSetting = "99705";
+        String testCityName = "North Pole";
+        double testLatitude = 64.7488;
+        double testLongitude = -147.353;
 
         // Insert ContentValues into database and get a row ID back
+        ContentValues contentValues = TestUtilities.createNorthPoleLocationValues();
+
+        Long locationRowId = db.insert(WeatherContract.LocationEntry.TABLE_NAME, null, contentValues);
+
+        assertTrue(locationRowId != -1);
 
         // Query the database and receive a Cursor back
-
+        Cursor cursor = db.query(WeatherContract.LocationEntry.TABLE_NAME,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
         // Move the cursor to a valid database row
-
+        Boolean activeCursor = cursor.moveToFirst();
+        assertTrue("Cursor is empty", activeCursor);
         // Validate data in resulting Cursor with the original ContentValues
+        TestUtilities.validateCursor("Invalid cursor initialization", cursor, contentValues);
+        TestUtilities.validateCurrentRecord("Invalid table entry", cursor, contentValues);
         // (you can use the validateCurrentRecord function in TestUtilities to validate the
         // query if you like)
 
         // Finally, close the cursor and database
-
+        cursor.close();
+        db.close();
     }
 
     /*
