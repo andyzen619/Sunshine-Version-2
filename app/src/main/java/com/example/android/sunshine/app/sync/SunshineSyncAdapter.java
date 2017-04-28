@@ -28,12 +28,9 @@ import android.text.format.Time;
 import android.util.Log;
 
 import com.example.android.sunshine.app.BuildConfig;
-<<<<<<< HEAD:app/src/main/java/com/example/android/sunshine/app/service/SunshineService.java
-=======
 import com.example.android.sunshine.app.MainActivity;
 import com.example.android.sunshine.app.R;
 import com.example.android.sunshine.app.Utility;
->>>>>>> 1674b673e7d51526925b600794ff766aa42f43cd:app/src/main/java/com/example/android/sunshine/app/sync/SunshineSyncAdapter.java
 import com.example.android.sunshine.app.data.WeatherContract;
 
 import org.json.JSONArray;
