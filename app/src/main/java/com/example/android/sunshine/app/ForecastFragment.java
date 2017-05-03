@@ -15,6 +15,7 @@
  */
 package com.example.android.sunshine.app;
 
+import android.app.IntentService;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -33,6 +34,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.android.sunshine.app.Service.SunshineService;
 import com.example.android.sunshine.app.data.WeatherContract;
 import com.example.android.sunshine.app.sync.SunshineSyncAdapter;
 
@@ -189,6 +191,8 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
 
     private void updateWeather() {
         SunshineSyncAdapter.syncImmediately(getActivity());
+        Intent updateWeatherService = new Intent(getActivity(), SunshineService.class);
+        updateWeatherService.putExtra()
     }
 
     private void openPreferredLocationInMap() {
